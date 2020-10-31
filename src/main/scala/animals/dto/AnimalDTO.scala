@@ -7,12 +7,12 @@ trait AnimalPropsInput {
   def toAnimal(animalId: Long): AnimalProperties
 }
 
-case class DogPropsInputDTO(breed_id: Long) extends AnimalPropsInput {
-  override def toAnimal(animalId: Long): DogProperties = DogProperties(animalId, breed_id)
+case class DogPropsInputDTO(shelterId: Long, workerId: Long, breedId: Long) extends AnimalPropsInput {
+  override def toAnimal(animalId: Long): DogProperties = DogProperties(animalId, shelterId, workerId, breedId)
 }
 
-case class CatPropsInputDTO(breed_id: Long) extends AnimalPropsInput {
-  override def toAnimal(animalId: Long): CatProperties = CatProperties(animalId, breed_id)
+case class CatPropsInputDTO(shelterId: Long, workerId: Long, breedId: Long) extends AnimalPropsInput {
+  override def toAnimal(animalId: Long): CatProperties = CatProperties(animalId, shelterId, workerId, breedId)
 }
 
 case class AnimalInputDTO[T <: AnimalPropsInput](id: Option[Long] = None,
@@ -62,11 +62,19 @@ object AnimalInputDTO {
 }
 
 
-trait AnimalPropertiesOutputDTO
+trait AnimalPropertiesOutputDTO {
+  val breed: DictElemDTO
+  val shelter: ShelterDTO
+  val worker: AccountDTO
+}
 
-case class DogPropertiesOutputDTO(breed: DictElemDTO) extends AnimalPropertiesOutputDTO
+case class DogPropertiesOutputDTO(breed: DictElemDTO,
+                                  shelter: ShelterDTO,
+                                  worker: AccountDTO) extends AnimalPropertiesOutputDTO
 
-case class CatPropertiesOutputDTO(breed: DictElemDTO) extends AnimalPropertiesOutputDTO
+case class CatPropertiesOutputDTO(breed: DictElemDTO,
+                                  shelter: ShelterDTO,
+                                  worker: AccountDTO) extends AnimalPropertiesOutputDTO
 
 case class AnimalOutputDTO[T <: AnimalPropertiesOutputDTO](id: Long,
                                                            name: String,

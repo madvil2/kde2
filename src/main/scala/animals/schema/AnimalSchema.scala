@@ -1,9 +1,8 @@
 package animals.schema
 
-import animals.dao.Animals.AnimalSpecies.{Cat, Dog}
-//import animals.dao.Animals.{AnimalsDAO, AnimalSpecies}
-import animals.dao.DictDAO
+import animals.dao.{AccountDAO, DictDAO, ShelterDAO}
 import animals.dto.{AnimalPropertiesOutputDTO, CatPropertiesOutputDTO, DogPropertiesOutputDTO}
+import animals.errors.NotFound
 import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.{KeyedEntity, Schema}
 
@@ -31,24 +30,36 @@ case class Animal(id: Long = 0, //TODO переделать в андерско�
 
 trait AnimalProperties {
   val animal_id: Long
+  val shelter_id: Long
+
   def toDTO: AnimalPropertiesOutputDTO
 }
 
 
-case class DogProperties(animal_id: Long, breed_id: Long) extends AnimalProperties {
-  def this() = this(0, 0)
+case class DogProperties(animal_id: Long,
+                         shelter_id: Long,
+                         worker_id: Long,
+                         breed_id: Long) extends AnimalProperties {
+  def this() = this(0, 0, 0, 0)
 
   override def toDTO: DogPropertiesOutputDTO = DogPropertiesOutputDTO(
-    DictDAO("dict_breed_dog").dictElem(breed_id)
+    DictDAO("dict_breed_dog").dictElem(breed_id),
+    ShelterDAO.shelterById(shelter_id).getOrElse(throw NotFound(s"shelter with id = $shelter_id")),
+    AccountDAO.accountById(worker_id)
   )
 
 }
 
-case class CatProperties(animal_id: Long, breed_id: Long) extends AnimalProperties {
-  def this() = this(0, 0)
+case class CatProperties(animal_id: Long,
+                         shelter_id: Long,
+                         worker_id: Long,
+                         breed_id: Long) extends AnimalProperties {
+  def this() = this(0, 0, 0, 0)
 
   override def toDTO: CatPropertiesOutputDTO = CatPropertiesOutputDTO(
-    DictDAO("dict_breed_cat").dictElem(breed_id)
+    DictDAO("dict_breed_cat").dictElem(breed_id),
+    ShelterDAO.shelterById(shelter_id).getOrElse(throw NotFound(s"shelter with id = $shelter_id")),
+    AccountDAO.accountById(worker_id)
   )
 }
 

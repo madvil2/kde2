@@ -3,7 +3,7 @@ package animals.dao.Animals
 import animals.dao.Animals.AnimalSpecies.{Cat, Dog}
 import animals.dao.{AccountDAO, DictDAO, FileDAO}
 import animals.dto.{AnimalInputDTO, AnimalOutputDTO, AnimalPropertiesOutputDTO, AnimalPropsInput, CatPropertiesOutputDTO, DogPropertiesOutputDTO}
-import animals.errors.NotFound
+import animals.errors.{BadRequest, NotFound}
 import animals.schema.{Account, Animal, AnimalProperties, AnimalSchema, CatProperties, DictSchema, DogProperties}
 import org.squeryl.dsl.ast.LogicalBoolean
 import org.squeryl.{PrimitiveTypeMode, Table}
@@ -99,6 +99,14 @@ trait ReadAnimal[P <: AnimalProperties, O <: AnimalPropertiesOutputDTO] extends 
       }
   }
 
+  def animalById(id: Long): AnimalOutputDTO[O] = inTransaction {
+    val animal = AnimalSchema.animals.lookup(id).getOrElse(throw NotFound(s"Animal with id = $id "))
+    val prop = propsById(animal.id)
+
+    animalsToOutput(animal, prop)
+
+  }
+
 }
 
 
@@ -124,6 +132,7 @@ object AnimalsDAO {
   def apply(speciesName: String) = AnimalSpecies(speciesName) match {
     case Dog => new DogAnimalDAO
     case Cat => new CatAnimalDAO
+    case _ => throw BadRequest("")
   }
 
 

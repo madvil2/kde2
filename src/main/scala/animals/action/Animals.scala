@@ -5,7 +5,7 @@ import xitrum.annotation.{GET, POST, Swagger}
 import animals.dao.Animals.AnimalsDAO
 import animals.dto.{AnimalInputDTO, AnimalOutputDTO}
 import xitrum.annotation.Swagger.{Description, DoubleBody, IntBody, OptIntBody, OptStringBody, OptStringPath, Response, StringBody, StringPath, Summary, Tags}
-
+import animals.configuration.GlobalConstants._
 import scala.util.Try
 
 @POST("/animals/:animalType")
@@ -26,8 +26,15 @@ import scala.util.Try
   IntBody("creatorId", "id создателя записи"),
   OptStringBody("cardNumber", "номер каточки"),
   OptIntBody("fileId", "id файла для аватарки"),
-  StringBody("properties", "Объект вида properties{\nbreed_id: Int\n}\n" +
-    "breed_id айди из словаря dict_breed_cats"),
+  StringBody("properties", """Объект вида properties{
+                            breed_id: Int,
+                            shelter_id: Long,
+                            worker_id: Long
+                            }
+    breed_id айди из словаря dict_breed_cats
+    shelter_id - ссылка на приют
+    worker_id - на сотрудника приюта
+    """),
   Response(200, "id файла, filename, path")
 )
 class PostAnimal extends PostAbstractAction {
@@ -51,7 +58,7 @@ class PostAnimal extends PostAbstractAction {
 class GetAnimals extends AbstractAction {
   override def perform(): Either[Throwable, AnyRef] = Try {
     val obj = AnimalsDAO(param("animalType"))
-    obj.animals(0, 20, queryParams)
+    obj.animals(DefaultOffset, DefaultLimit, queryParams)
   }.toEither
 }
 

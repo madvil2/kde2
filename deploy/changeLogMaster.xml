@@ -21,4 +21,8 @@
     <include file="insert_values/0.01/insert-values-tails.xml"/>
     <include file="insert_values/0.01/insert-values-breed-dog.xml"/>
 
+    <include file="structure/0.02/init-table-organization.xml"/>
+    <include file="structure/0.02/init-table-shelter.xml"/>
+    <include file="structure/0.02/alter-animals-props.xml"/>
+
 </databaseChangeLog>

@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="0.02-init-table-shelter" author="Tikhomirov">
+        <sql>
+            CREATE TABLE shelter(
+            id BIGSERIAL PRIMARY KEY,
+            address TEXT NOT NULL UNIQUE,
+            file_id BIGINT,
+            organization_id BIGINT NOT NULL,
+            boss_id BIGINT NOT NULL,
+            FOREIGN KEY (file_id) REFERENCES file(id),
+            FOREIGN KEY (organization_id) REFERENCES organization(id),
+            FOREIGN KEY (boss_id) REFERENCES account(id)
+            );
+
+            CREATE TABLE account_shelter(
+            source_id BIGSERIAL NOT NULL,
+            target_id BIGSERIAL NOT NULL,
+            FOREIGN KEY (source_id) REFERENCES account(id),
+            FOREIGN KEY (target_id) REFERENCES shelter(id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
