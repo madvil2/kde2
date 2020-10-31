@@ -1,4 +1,4 @@
-package animals.Schema
+package animals.schema
 
 import animals.dto.AccountDTO
 import org.squeryl.PrimitiveTypeMode._

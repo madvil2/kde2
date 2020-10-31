@@ -1,10 +1,10 @@
 package animals.dao
 
-import animals.Schema.Account
+import animals.schema.Account
 import org.squeryl.{PrimitiveTypeMode, Query}
-import animals.Schema.AccountSchema._
+import animals.schema.AccountSchema._
 import animals.dao.AccountDAO.{from, inTransaction, where}
-import animals.dto.AccountDTO
+import animals.dto.{AccountDTO, AccountPatchDTO}
 import animals.errors.{BadRequest, NotFound}
 import com.roundeights.hasher.Implicits._
 import xitrum.scope.request.Params
@@ -18,12 +18,12 @@ object PassValidate extends PrimitiveTypeMode {
 
   def userIdByLogPass(login: String)(password: String): Long = {
     val passwordHashed = password.hashed
-    inTransaction{
+    inTransaction {
       from(account)(acc =>
         where(
           acc.login === login and acc.pass === passwordHashed
         )
-          select(acc.id)
+          select (acc.id)
       ).headOption.getOrElse(throw NotFound("User not found"))
     }
   }
@@ -54,28 +54,38 @@ object AccountDAO extends PrimitiveTypeMode {
   }
 
   def createAccount(acc: AccountDTO): AccountDTO = inTransaction(account.insert(
-      Account(
-        0,
-        acc.login,
-        acc.username,
-        acc.pass.map(_.hashed).getOrElse(throw BadRequest()),
-        acc.fileId
-      )
-    ).toDTO
+    Account(
+      0,
+      acc.login,
+      acc.username,
+      acc.password.map(_.hashed).getOrElse(throw BadRequest()),
+      acc.fileId
+    )
+  ).toDTO
   )
 
-
-  private def prepareQuery(params: Params): Query[Account] = {
-   from(account)(acc => select(acc))
+  def updateAccount(userId: Long, user: AccountPatchDTO) = inTransaction {
+    update(account)(acc => where(userId === acc.id)
+      set(acc.pass := user.password.getOrElse(acc.pass),
+      acc.username := user.username.getOrElse(acc.username),
+      acc.fileId := user.fileId.orElse(acc.fileId)
+    )) match {
+      case 0 => throw NotFound(s"id = $userId")
+      case _ => userId
+    }
   }
 
-  def accountById(id: Long): AccountDTO = inTransaction{
+  private def prepareQuery(params: Params): Query[Account] = {
+    from(account)(acc => select(acc))
+  }
+
+  def accountById(id: Long): AccountDTO = inTransaction {
     account.lookup(id)
       .map(acc => AccountDTO(acc.id, acc.login, acc.username, acc.fileId))
       .getOrElse(throw NotFound(s"user with id = $id"))
   }
 
-  def accountList(params: Params): List[AccountDTO] = inTransaction{
+  def accountList(params: Params): List[AccountDTO] = inTransaction {
     prepareQuery(params)
       .toList
       .map(acc => AccountDTO(acc.id, acc.login, acc.username, acc.fileId))

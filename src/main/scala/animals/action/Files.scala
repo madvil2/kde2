@@ -1,5 +1,6 @@
 package animals.action
 
+import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
 import animals.dao.FileDAO
 import animals.dto.GeneralIdDTO
 import io.netty.handler.codec.http.multipart.FileUpload
@@ -14,7 +15,7 @@ import scala.util.Try
   Description("создание файла"),
   Response(200, "id файла")
 )
-class PostFile extends AbstractAction with AuthorizedAction {
+class PostFile extends PostAbstractAction with AuthorizedAction {
   override def perform(): Either[Throwable, AnyRef] = Try{
     GeneralIdDTO(
       FileDAO.createFile(paramo[FileUpload]("file")).getOrElse(

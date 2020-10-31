@@ -1,4 +1,4 @@
-package animals.Schema
+package animals.schema
 
 import org.squeryl.PrimitiveTypeMode._
 import org.squeryl.{KeyedEntity, Schema}

@@ -2,7 +2,7 @@ package animals.dao
 
 import java.io.{BufferedOutputStream, FileOutputStream}
 
-import animals.Schema.{File, FilesSchema}
+import animals.schema.{File, FilesSchema}
 import animals.configuration.GlobalConstants
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.handler.codec.http.multipart.FileUpload
@@ -11,8 +11,9 @@ import cats.implicits._
 
 object FileDAO extends PrimitiveTypeMode {
 
+  //todo делать это нормально
   private def uniquePath(filename: Option[String]) = {
-    filename.map(GlobalConstants.ResDir +"/"+ _)
+    filename.map(GlobalConstants.ResDir + "/"+ _)
   }
 
   private def createNewFile(filename: String, path: String): Long = transaction(FilesSchema.file.insert(File(filename, path = path))).id
