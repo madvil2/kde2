@@ -6,13 +6,16 @@ import animals.errors.NotFound
 import org.squeryl.{PrimitiveTypeMode, Table}
 import xitrum.scope.request.Params
 
+
 class DictDAO(tableName: String) extends DictCRUD {
   override val dictTable = DictSchema.tableByName(tableName)
 }
 
+
+
 object DictDAO {
   def apply(tableName: String): DictDAO = new DictDAO(tableName)
-
+  def apply(table: Table[DictElem]): DictDAO = new DictDAO(table.name)
   def dictTableList = DictListDTO(DictSchema.tables.map(_.name).toList)
 }
 
@@ -23,6 +26,13 @@ trait DictCRUD extends PrimitiveTypeMode {
   lazy val tableName = dictTable.name
 
   def dictValues = inTransaction(DictDTO(tableName, from(dictTable)(d => select(d)).toList.map(_.toDTO)))
+
+  def dictElem(id: Long) = inTransaction{
+    from(dictTable)(d => where(d.id === id) select d)
+      .headOption
+      .map(_.toDTO(tableName))
+      .getOrElse(throw NotFound(s"elem with id = $id and tableName = $tableName"))
+  }
 
   def insertValue(dict: DictElemDTO) = inTransaction(
     DictDTO(

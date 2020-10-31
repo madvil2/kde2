@@ -23,6 +23,8 @@ object DictElem {
   implicit class DictToDTO(dict: DictElem) {
     def toDTO = new DictElemDTO(dict.id.some, dict.value, dict.description)
 
+    def toDTO(tableName: String) = new DictElemDTO(dict.id.some, dict.value, dict.description, tableName.some)
+
   }
 }
 
@@ -35,7 +37,7 @@ object DictSchema extends Schema{
 
   val dictTail = table[DictElem]("dict_tail")
   val dictSize = table[DictElem]("dict_size")
-  val dictSpice = table[DictElem]("dict_species")
+  val dictSpecies = table[DictElem]("dict_species")
   val dictSex = table[DictElem]("dict_sex")
   val dictBreedDog = table[DictElem]("dict_breed_dog")
   val dictBreedCat = table[DictElem]("dict_breed_cat")

@@ -9,16 +9,13 @@ case class AccountDTO(id: Option[Long],
                       username: String,
                       fileId: Option[Long] = None,
                       password: Option[String] = None,
-                      filepath: Option[String] = None
+                      filepath: Option[String] = None,
+                      file: Option[FileDTO] = None
                      )
 
 object AccountDTO {
   def apply(id: Long, login: String, username: String, fileId: Option[Long]) = {
-    new AccountDTO(id.some, login, username, fileId, filepath = FileDAO.filepathById(fileId))
-  }
-
-  implicit class AccountDTOtoAccount(acc: AccountDTO) {
-    //def toAccount: Account = new Account(acc.id.getOrElse(0), acc.login, acc.username, acc.fileId, acc.pa)
+    new AccountDTO(id.some, login, username, file = fileId.map(id => FileDAO.fileById(id)))
   }
 
 }

@@ -11,7 +11,7 @@ object RichParams {
 
   /** Получение значения параметра из queryParams */
   implicit class ParamByName(queryParams: Params) {
-    def paramByName[T: TypeTag](param: String)(implicit d: T DefaultsTo String) = queryP[T](queryParams, param)
+    def byName[T: TypeTag](param: String)(implicit d: T DefaultsTo String) = queryP[T](queryParams, param)
   }
 
   def queryP[T: TypeTag](queryParams: Params, param: String)(implicit d: T DefaultsTo String): Option[T] =

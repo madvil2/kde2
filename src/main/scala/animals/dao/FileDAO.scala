@@ -2,8 +2,9 @@ package animals.dao
 
 import java.io.{BufferedOutputStream, FileOutputStream}
 
-import animals.schema.{File, FilesSchema}
+import animals.schema.{File, FileSchema}
 import animals.configuration.GlobalConstants
+import animals.errors.NotFound
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.handler.codec.http.multipart.FileUpload
 import org.squeryl.PrimitiveTypeMode
@@ -16,10 +17,14 @@ object FileDAO extends PrimitiveTypeMode {
     filename.map(GlobalConstants.ResDir + "/"+ _)
   }
 
-  private def createNewFile(filename: String, path: String): Long = transaction(FilesSchema.file.insert(File(filename, path = path))).id
+  private def createNewFile(filename: String, path: String): Long = transaction(FileSchema.file.insert(File(filename, path = path))).id
 
   def filepathById(id: Option[Long]) = transaction {
-    id.flatMap(FilesSchema.file.lookup(_).map(_.path))
+    id.flatMap(FileSchema.file.lookup(_).map(_.path))
+  }
+
+  def fileById(id: Long) = inTransaction {
+    FileSchema.file.lookup(id).map(_.toDTO).getOrElse(throw NotFound(s"file with id = $id"))
   }
 
   def createFile(file: Option[FileUpload]): Option[Long] = {

@@ -4,7 +4,6 @@ import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
 import animals.dao.AccountDAO
 import animals.dto.{AccountDTO, AccountPatchDTO, GeneralIdDTO}
 import animals.errors.Forbidden
-import xitrum.annotation.Swagger._
 import xitrum.annotation.{GET, PATCH, POST, PUT, Swagger}
 
 import scala.util.Try
