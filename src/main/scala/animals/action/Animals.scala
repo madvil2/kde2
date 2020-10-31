@@ -4,29 +4,10 @@ import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
 import xitrum.annotation.{GET, POST, Swagger}
 import animals.dao.Animals.AnimalsDAO
 import animals.dto.{AnimalInputDTO, AnimalOutputDTO}
-import animals.schema.AnimalProperties
 import xitrum.annotation.Swagger.{Description, DoubleBody, IntBody, OptIntBody, OptStringBody, OptStringPath, Response, StringBody, StringPath, Summary, Tags}
 
 import scala.util.Try
 
-
-
-//name: String,
-//age: Int,
-//weight: Double,
-//comment: Option[String],
-//speciesId: Int,
-//sexId: Int,
-//colorId: Int,
-//furId: Int,
-//earId: Int,
-//tailId: Int,
-//sizeId: Int,
-//creatorId: Int,
-//cardNumber: Option[String],
-//status: Int,
-//fileId: Option[Long],
-//properties: T
 @POST("/animals/:animalType")
 @Swagger(
   Tags("animals"),
