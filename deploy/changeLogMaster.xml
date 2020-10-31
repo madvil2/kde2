@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <include file="structure/0.01/init-table-file.xml"/>
+    <include file="structure/0.01/init-tables-dict.xml"/>
+    <include file="structure/0.01/init-table-account.xml"/>
+    <include file="structure/0.01/init-table-animal.xml"/>
+    <include file="structure/0.01/init-table-cats-dogs-props.xml"/>
+
+    <include file="insert_values/0.01/insert-values-accounts.xml"/>
+    <include file="insert_values/0.01/insert-values-color.xml"/>
+    <include file="insert_values/0.01/insert-values-ears.xml"/>
+    <include file="insert_values/0.01/insert-values-fur.xml"/>
+    <include file="insert_values/0.01/insert-values-sex.xml"/>
+    <include file="insert_values/0.01/insert-values-size.xml"/>
+    <include file="insert_values/0.01/insert-values-species.xml"/>
+    <include file="insert_values/0.01/insert-values-tails.xml"/>
+    <include file="insert_values/0.01/insert-values-breed-dog.xml"/>
+
+</databaseChangeLog>

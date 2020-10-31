@@ -1,0 +1,101 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="0.01-insert-values-color" author="Tikhomirov">
+        <sql>
+            INSERT INTO dict_color(value)
+            VALUES ('черный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('рыжий');
+
+            INSERT INTO dict_color(value)
+            VALUES ('красный с белым');
+
+            INSERT INTO dict_color(value)
+            VALUES ('соболиный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('фавн (бежевый)');
+
+            INSERT INTO dict_color(value)
+            VALUES ('абрикосовый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('голубой с белым');
+
+            INSERT INTO dict_color(value)
+            VALUES ('черно-красный-белый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('черный с белым');
+
+            INSERT INTO dict_color(value)
+            VALUES ('темно-коричневый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('светло-коричневый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('красный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('дымчатый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('шоколадный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('золотой');
+
+            INSERT INTO dict_color(value)
+            VALUES ('арлекин');
+
+            INSERT INTO dict_color(value)
+            VALUES ('мраморный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('триколор');
+
+            INSERT INTO dict_color(value)
+            VALUES ('палевый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('биколор');
+
+            INSERT INTO dict_color(value)
+            VALUES ('белый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('черепаховый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('кремовый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('тигровый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('чепрачный');
+
+            INSERT INTO dict_color(value)
+            VALUES ('черно-белый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('перец с солью');
+
+            INSERT INTO dict_color(value)
+            VALUES ('серебристый');
+
+            INSERT INTO dict_color(value)
+            VALUES ('голубо-кремовый черепаховый');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

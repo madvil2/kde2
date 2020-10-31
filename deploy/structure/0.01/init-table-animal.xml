@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="0.01-init-table-animal" author="Tikhomirov">
+        <sql>
+            CREATE TABLE animal(
+            id BIGSERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            age INT NOT NULL,
+            weight REAL NOT NULL,
+            comment TEXT,
+            spice_id INT NOT NULL,
+            sex_id INT NOT NULL,
+            color_id INT NOT NULL,
+            fur_id INT NOT NULL,
+            ear_id INT NOT NULL,
+            tail_id INT NOT NULL,
+            size_id INT NOT NULL,
+            creator_id INT NOT NULL,
+            card_number TEXT,
+            status INT,
+            file_id INT,
+            CONSTRAINT animal_status CHECK (animal.status IN (-1, 0, 1)),
+            FOREIGN KEY (spice_id) REFERENCES dict_species(id),
+            FOREIGN KEY (sex_id) REFERENCES dict_sex(id),
+            FOREIGN KEY (color_id) REFERENCES dict_color(id),
+            FOREIGN KEY (fur_id) REFERENCES dict_fur(id),
+            FOREIGN KEY (ear_id) REFERENCES dict_ear(id),
+            FOREIGN KEY (tail_id) REFERENCES dict_tail(id),
+            FOREIGN KEY (size_id) REFERENCES dict_size(id),
+            FOREIGN KEY (creator_id) REFERENCES account(id),
+            FOREIGN KEY (file_id) REFERENCES file(id)
+            );
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>

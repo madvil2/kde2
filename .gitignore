@@ -1,0 +1,6 @@
+tmp
+.idea
+target
+config/ssl_example_fullchain.pem
+config/ssl_example_privkey.pem
+/admin/node_modules
