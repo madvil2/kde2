@@ -66,7 +66,7 @@ object AccountDAO extends PrimitiveTypeMode {
 
   def updateAccount(userId: Long, user: AccountPatchDTO) = inTransaction {
     update(account)(acc => where(userId === acc.id)
-      set(acc.pass := user.password.getOrElse(acc.pass),
+      set(acc.pass := user.password.map(_.hashed).getOrElse(acc.pass),
       acc.username := user.username.getOrElse(acc.username),
       acc.fileId := user.fileId.orElse(acc.fileId)
     )) match {

@@ -78,6 +78,7 @@ trait ReadAnimal[P <: AnimalProperties, O <: AnimalPropertiesOutputDTO] extends 
     val orderField = params.byName("orderField") match {
       case Some("id") => animal.id.~
       case Some("age") => animal.age.~
+      case Some("weight") => animal.weight.~
       case _ => animal.name.~
     }
     params.byName("orderType").map(_.toLowerCase()) match {

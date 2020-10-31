@@ -3,7 +3,10 @@ package animals.dao
 import animals.schema.{DictElem, DictSchema}
 import animals.dto.{DictDTO, DictElemDTO, DictListDTO}
 import animals.errors.NotFound
+import org.squeryl.dsl.ast.LogicalBoolean
 import org.squeryl.{PrimitiveTypeMode, Table}
+import xitrum.scope.request.Params
+import animals.util.RichParams._
 
 class DictDAO(tableName: String) extends DictCRUD {
   override val dictTable = DictSchema.tableByName(tableName)
@@ -23,7 +26,15 @@ trait DictCRUD extends PrimitiveTypeMode {
 
   lazy val tableName = dictTable.name
 
-  def dictValues = inTransaction(DictDTO(tableName, from(dictTable)(d => select(d)).toList.map(_.toDTO)))
+  def addWhereCondition(dict: DictElem, params: Params): LogicalBoolean = {
+    val valueFilter = params.byName("value")
+    (dict.value ilike valueFilter).inhibitWhen(valueFilter.isEmpty)
+  }
+  def dictValues(params: Params) = {
+    inTransaction(DictDTO(tableName, from(dictTable)(d => where(addWhereCondition(d, params))
+      select(d)
+    ).toList.map(_.toDTO)))
+  }
 
   def dictElem(id: Long) = inTransaction{
     from(dictTable)(d => where(d.id === id) select d)
