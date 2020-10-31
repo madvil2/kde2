@@ -6,7 +6,7 @@ import io.netty.handler.codec.http.HttpResponseStatus
 import xitrum.annotation.{DELETE, GET, POST, PUT, Swagger}
 import xitrum.annotation.Swagger.{Description, Response, Summary}
 import HttpResponseStatus._
-import animals.action.abstractActions.{AbstractAction, DeleteAbstractAction, PostAbstractAction}
+import animals.action.abstractActions.{AbstractAction, AuthorizedAction, DeleteAbstractAction, PostAbstractAction}
 
 import scala.util.Try
 

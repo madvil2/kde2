@@ -1,6 +1,6 @@
 package animals.action
 
-import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
+import animals.action.abstractActions.{AbstractAction, AuthorizedAction, PostAbstractAction}
 import animals.dao.AccountDAO
 import animals.dto.{AccountDTO, AccountPatchDTO, GeneralIdDTO}
 import animals.errors.Forbidden

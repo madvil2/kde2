@@ -4,8 +4,6 @@ import animals.schema.{DictElem, DictSchema}
 import animals.dto.{DictDTO, DictElemDTO, DictListDTO}
 import animals.errors.NotFound
 import org.squeryl.{PrimitiveTypeMode, Table}
-import xitrum.scope.request.Params
-
 
 class DictDAO(tableName: String) extends DictCRUD {
   override val dictTable = DictSchema.tableByName(tableName)

@@ -1,11 +1,11 @@
 package animals.action
 
 import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
-import xitrum.annotation.GET
+import xitrum.annotation.{GET, POST, Swagger}
 import animals.dao.Animals.AnimalsDAO
 import animals.dto.AnimalInputDTO
 import animals.schema.AnimalProperties
-import xitrum.annotation.POST
+import xitrum.annotation.Swagger.{Description, Response, Summary}
 
 import scala.util.Try
 
@@ -17,6 +17,11 @@ class PostAnimal extends PostAbstractAction {
   }.toEither
 }
 
+@Swagger(
+  Summary("животные"),
+  Description("реестр животных"),
+  Response(200, "id файла")
+)
 @GET("/animals/:animalType")
 class GetAnimals extends AbstractAction {
   override def perform(): Either[Throwable, AnyRef] = Try {

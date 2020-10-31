@@ -5,7 +5,6 @@ import java.io.{BufferedOutputStream, FileOutputStream}
 import animals.schema.{File, FileSchema}
 import animals.configuration.GlobalConstants
 import animals.errors.NotFound
-import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.handler.codec.http.multipart.FileUpload
 import org.squeryl.PrimitiveTypeMode
 import cats.implicits._

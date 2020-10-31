@@ -29,6 +29,7 @@ object AnimalSpecies {
   def apply(speciesName: String) = speciesName match {
     case Dog.speciesName => Dog
     case Cat.speciesName => Cat
+    case _ =>
   }
 }
 

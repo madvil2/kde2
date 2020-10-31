@@ -16,6 +16,15 @@ libraryDependencies += "org.squeryl" %% "squeryl" % "0.9.9"
 //------------------------------------------------------------------------------
 libraryDependencies += "tv.cntt" %% "xitrum" % "3.29.0"
 
+// Precompile Scalate templates
+import org.fusesource.scalate.ScalatePlugin._
+scalateSettings
+ScalateKeys.scalateTemplateConfig in Compile := Seq(TemplateConfig(
+  (sourceDirectory in Compile).value / "scalate",
+  Seq(),
+  Seq(Binding("helper", "xitrum.Action", importMembers = true))
+))
+
 // Xitrum uses SLF4J, an implementation of SLF4J is needed
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 // For writing condition in logback.xml

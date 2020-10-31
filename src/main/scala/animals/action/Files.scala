@@ -1,6 +1,6 @@
 package animals.action
 
-import animals.action.abstractActions.{AbstractAction, PostAbstractAction}
+import animals.action.abstractActions.{AbstractAction, AuthorizedAction, PostAbstractAction}
 import animals.dao.FileDAO
 import animals.dto.GeneralIdDTO
 import io.netty.handler.codec.http.multipart.FileUpload

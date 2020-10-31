@@ -1,15 +1,14 @@
-package animals.action
+package animals.action.abstractActions
 
 import java.nio.charset.StandardCharsets
-
-import org.squeryl.PrimitiveTypeMode
-import xitrum.Action
-
-import scala.util.{Failure, Success, Try}
 import java.util.Base64
 
 import animals.dao.AccountDAO
 import animals.errors.Unauthorized
+import org.squeryl.PrimitiveTypeMode
+import xitrum.Action
+
+import scala.util.{Failure, Success, Try}
 
 trait AuthorizedAction extends PrimitiveTypeMode{
   this: Action =>
