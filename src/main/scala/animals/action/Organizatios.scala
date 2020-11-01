@@ -40,7 +40,7 @@ class PostOrganization extends AbstractAction with AuthorizedAction{
   Description("Создать организацию"),
   Response(200, "Лист объектов-приютов")
 )
-class PostOrganization extends AbstractAction with AuthorizedAction{
+class GetSheltersByOrgs extends AbstractAction with AuthorizedAction{
   override def perform(): Either[Throwable, AnyRef] = Try(
     OrganizationDAO.sheltersByOrganization(param[Long]("id"))
   ).toEither
