@@ -1,11 +1,12 @@
 package animals.action.abstractActions
 
-import animals.errors.AbstractThrowable
+import animals.errors._
 import cats.implicits._
 import io.netty.handler.codec.http.HttpResponseStatus
 import io.netty.handler.codec.http.HttpResponseStatus._
 import org.json4s.DefaultFormats
 import xitrum.{ActorAction, SkipCsrfCheck}
+
 
 abstract class AbstractAction extends ActorAction with SkipCsrfCheck {
   implicit val formats = DefaultFormats
@@ -22,7 +23,7 @@ abstract class AbstractAction extends ActorAction with SkipCsrfCheck {
     }
 
     error match {
-      case e => throw e
+      case e: Unauthorized => respondCodeAndMessage(e.message.msg.some, e.code)
       case e: AbstractThrowable => respondCodeAndMessage(e.message.some, e.code)
       case e => respondCodeAndMessage(e.getMessage.some, HttpResponseStatus.INTERNAL_SERVER_ERROR)
     }
