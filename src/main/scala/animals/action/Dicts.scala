@@ -11,7 +11,7 @@ import animals.action.abstractActions.{AbstractAction, AuthorizedAction, DeleteA
 import scala.util.Try
 
 
-@GET("dicts/listTables")
+@GET("/dicts")
 @Swagger(
   Tags("dicts"),
   Summary("Dicts"),
