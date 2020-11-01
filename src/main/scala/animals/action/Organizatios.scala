@@ -18,7 +18,9 @@ import scala.util.Try
   Response(200, "Лист объектов-организаций")
 )
 class GetOrganizationList extends AbstractAction with AuthorizedAction{
-  override def perform(): Either[Throwable, AnyRef] = OrganizationDAO.organizationsList(DefaultOffset, DefaultLimit, queryParams)
+  override def perform(): Either[Throwable, AnyRef] = Try{
+    OrganizationDAO.organizationsList(DefaultOffset, DefaultLimit, queryParams)
+  }.toEither
 }
 
 @POST("/organizations")
@@ -29,7 +31,9 @@ class GetOrganizationList extends AbstractAction with AuthorizedAction{
   Response(201, "Лист объектов-организаций")
 )
 class PostOrganization extends AbstractAction with AuthorizedAction{
-  override def perform(): Either[Throwable, AnyRef] = OrganizationDAO.insertOrganization(requestContentJValue.extract[OrganizationDTO])
+  override def perform(): Either[Throwable, AnyRef] = Try{
+    OrganizationDAO.insertOrganization(requestContentJValue.extract[OrganizationDTO])
+  }.toEither
 }
 
 @GET("/organizations/:id/shelters")
